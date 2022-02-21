@@ -1,0 +1,6 @@
+venv
+**/*.pyc
+**/__pycache__
+static
+media
+sent_mails
