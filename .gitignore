@@ -2,5 +2,6 @@ venv
 **/*.pyc
 **/__pycache__
 static
-media
+media/users/
+media/posts/
 sent_mails

@@ -8,10 +8,6 @@ from django.urls import reverse_lazy
 from .models import User
 from .forms import UserRegistrationForm, UserEditForm
 
-# test
-def home(request):
-    return render(request, 'post.html')
-
 # Create your views here.
 class UserRegistrationView(CreateView):
     model = User
