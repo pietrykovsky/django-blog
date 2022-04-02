@@ -36,14 +36,22 @@ class CategoryCreateView(CreateView):
     model = Category
     fields = ['title']
     template_name = 'create_category.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('blog')
 
 @method_decorator(user_is_redactor, name="dispatch")
 class CategoryEditView(UpdateView):
     model = Category
     fields = ['title']
     template_name = 'edit_category.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('blog')
+
+@login_required
+@user_is_redactor
+def category_delete(request, pk):
+    if request.method == 'POST':
+        category = get_object_or_404(Category, pk=pk)
+        category.delete()
+    return redirect('blog')
 
 @method_decorator(user_is_redactor, name="dispatch")
 class PostCreateView(CreateView):

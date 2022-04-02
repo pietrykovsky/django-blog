@@ -79,7 +79,17 @@
           <h3 class="h6">Categories</h3>
         </header>
         {% for category in category_list %}
-        <div class="item d-flex justify-content-between"><a href="#">{{ category.title }}</a><span>{{ category.posts_count }}</span></div>
+        <div class="item d-flex justify-content-between">
+          <div class="d-flex align-items-center">
+            {% if request.user.is_redactor or request.user.is_staff %}
+            <form action="{% url 'category_delete' category.pk %}" method="post"> {% csrf_token %}
+              <button type="submit" class="btn btn-danger py-0 px-1 mr-2"><i class="fa fa-times"></i></button>
+            </form>
+            {% endif %}
+            <a href="#">{{ category.title }}</a>
+          </div>
+          <span>{{ category.posts_count }}</span>
+        </div>
         {% endfor %}
       </div>
     </aside>
