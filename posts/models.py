@@ -3,14 +3,31 @@ from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from users.models import User
 
+def post_directory_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename=f'thumbnail.{ext}'
+    return f'posts/{instance.id}/{filename}'
+
 # Create your models here.
+class Category(models.Model):
+    title = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.title
+    @property
+    def posts_count(self):
+        posts = Post.objects.filter(category=self)
+        return posts.count()
+
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
+    description = models.CharField(max_length=250)
     content = RichTextUploadingField()
-    thumbnail = models.ImageField(default='default/thumbnail.jpg' ,upload_to='posts/', null=True, blank=True)
+    thumbnail = models.ImageField(default='default/thumbnail.jpg' , upload_to=post_directory_path)
     timestamp = models.DateTimeField(auto_now_add=True)
-
+    
     @property
     def comment_list(self):
         return Comment.objects.filter(post=self)

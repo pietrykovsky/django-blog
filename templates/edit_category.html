@@ -1,0 +1,12 @@
+{% extends 'form.html' %}
+{% load crispy_forms_tags %}
+
+{% block form_title %}Edit post category{% endblock %}
+{% block form %}
+<form method="post"> {% csrf_token %}
+    {{ form|crispy }}
+    <div class="pt-4">
+        <button class="btn btn-primary btn-block" type="submit">Edit</button>
+    </div>
+</form>
+{% endblock %}

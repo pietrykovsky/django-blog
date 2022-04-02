@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 
 from .forms import CommentForm
-from .models import Post, Comment, PostView
+from .models import Post, Comment, PostView, Category
 from users.models import User
 
 from .decorators import user_is_redactor, user_is_comment_author
@@ -22,20 +22,35 @@ def home(request):
 
 def blog(request):
     post_list = Post.objects.all()
+    category_list = Category.objects.all()
     paginator = Paginator(post_list, 4)
     page_number = request.GET.get('page')
 
     page_obj = paginator.get_page(page_number)
     latest = Post.objects.all()[:3]
-    context = {'latest': latest, 'page_obj': page_obj}
+    context = {'latest': latest, 'page_obj': page_obj, 'category_list': category_list}
     return render(request, 'blog.html', context)
+
+@method_decorator(user_is_redactor, name="dispatch")
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ['title']
+    template_name = 'create_category.html'
+    success_url = reverse_lazy('home')
+
+@method_decorator(user_is_redactor, name="dispatch")
+class CategoryEditView(UpdateView):
+    model = Category
+    fields = ['title']
+    template_name = 'edit_category.html'
+    success_url = reverse_lazy('home')
 
 @method_decorator(user_is_redactor, name="dispatch")
 class PostCreateView(CreateView):
     model = Post
     template_name = 'create_post.html'
-    fields = ['title', 'thumbnail', 'content']
-    success_url = reverse_lazy('home')
+    fields = ['category' ,'title', 'description', 'thumbnail', 'content']
+    success_url = reverse_lazy('blog')
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -48,7 +63,7 @@ class PostCreateView(CreateView):
 class PostEditView(UpdateView):
     model = Post
     template_name = 'edit_post.html'
-    fields = ['title', 'thumbnail', 'content']
+    fields = ['category' ,'title', 'description','thumbnail', 'content']
 
     def form_valid(self, form):
         self.object = form.save()
