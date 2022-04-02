@@ -51,7 +51,7 @@
         </div>
       </div>
       {% if forloop.counter|divisibleby:2 %}
-      <div class="image col-lg-5"><a href="{% url 'post' post.pk %}"><img src="{{ post.thumbnail.url }}" alt="..." class=""></a>/div>
+      <div class="image col-lg-5"><a href="{% url 'post' post.pk %}"><img src="{{ post.thumbnail.url }}" alt="..." class=""></a></div>
       {% endif %}
     {% endfor %}
   </div>

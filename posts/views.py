@@ -16,8 +16,7 @@ from .decorators import user_is_redactor, user_is_comment_author
 def home(request):
     posts = Post.objects.all()
     recent = posts[:3]
-    sorted(posts, key = lambda post: post.view_count, reverse = True)
-    popular = posts[:3]
+    popular = sorted(posts, key = lambda post: post.view_count, reverse = True)[:3]
     context = {'popular': popular, 'recent': recent}
     return render(request, 'index.html', context)
 
