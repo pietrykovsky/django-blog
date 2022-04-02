@@ -19,7 +19,7 @@
               <div class="d-flex align-items-center">
                 <div class="mx-1">
                   <form action="{% url 'post_edit' post.pk %}"> {% csrf_token %}
-                    <button class="btn btn-success btn-sm rounded-0" type="submit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-warning btn-sm rounded-0" type="submit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
                   </form>
                 </div>
                 <div>
@@ -53,25 +53,16 @@
         <header>
           <h3 class="h6">Search the blog</h3>
         </header>
-        <form action="#" class="search-form">
+        <form action="{% url 'blog' %}" class="search-form">
           <div class="form-group">
-            <input type="search" placeholder="What are you looking for?">
+            <input type="search" name="search" placeholder="What are you looking for?">
             <button type="submit" class="submit"><i class="icon-search"></i></button>
           </div>
         </form>
       </div>
       {% include 'latest_posts.html' %}
       <!-- Widget [Categories Widget]-->
-      <div class="widget categories">
-        <header>
-          <h3 class="h6">Categories</h3>
-        </header>
-        <div class="item d-flex justify-content-between"><a href="#">Growth</a><span>12</span></div>
-        <div class="item d-flex justify-content-between"><a href="#">Local</a><span>25</span></div>
-        <div class="item d-flex justify-content-between"><a href="#">Sales</a><span>8</span></div>
-        <div class="item d-flex justify-content-between"><a href="#">Tips</a><span>17</span></div>
-        <div class="item d-flex justify-content-between"><a href="#">Local</a><span>25</span></div>
-      </div>
+      {% include 'categories.html' %}
     </aside>
   </div>
 </div>

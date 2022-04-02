@@ -24,7 +24,7 @@
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
                 <div class="date meta-last">{{ post.timestamp|date:"j F Y" }}</div>
-                <div class="category"><a href="#">{{ post.category }}</a></div>
+                <div class="category"><a href="{% url 'blog' %}?search={{ post.category.title }}">{{ post.category }}</a></div>
               </div><a href="{% url 'post' post.pk %}">
                 <h3 class="h4">{{ post.title }}</h3></a>
               <p class="text-muted">{{ post.description }}</p>
@@ -64,9 +64,9 @@
         <header>
           <h3 class="h6">Search the blog</h3>
         </header>
-        <form action="#" class="search-form">
+        <form action="{% url 'blog' %}" class="search-form">
           <div class="form-group">
-            <input type="search" placeholder="What are you looking for?">
+            <input type="search" name="search" placeholder="What are you looking for?">
             <button type="submit" class="submit"><i class="icon-search"></i></button>
           </div>
         </form>
@@ -74,24 +74,7 @@
       <!-- Widget [Latest Posts Widget] -->
       {% include 'latest_posts.html' %}
       <!-- Widget [Categories Widget]-->
-      <div class="widget categories">
-        <header>
-          <h3 class="h6">Categories</h3>
-        </header>
-        {% for category in category_list %}
-        <div class="item d-flex justify-content-between">
-          <div class="d-flex align-items-center">
-            {% if request.user.is_redactor or request.user.is_staff %}
-            <form action="{% url 'category_delete' category.pk %}" method="post"> {% csrf_token %}
-              <button type="submit" class="btn btn-danger py-0 px-1 mr-2"><i class="fa fa-times"></i></button>
-            </form>
-            {% endif %}
-            <a href="#">{{ category.title }}</a>
-          </div>
-          <span>{{ category.posts_count }}</span>
-        </div>
-        {% endfor %}
-      </div>
+      {% include 'categories.html' %}
     </aside>
   </div>
 </div>

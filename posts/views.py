@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
+from django.db.models import Q
 
 from .forms import CommentForm
 from .models import Post, Comment, PostView, Category
@@ -21,13 +22,18 @@ def home(request):
     return render(request, 'index.html', context)
 
 def blog(request):
-    post_list = Post.objects.all()
+    latest = Post.objects.all()[:3]
+    if request.GET.get('search'):
+        search = request.GET.get('search')
+        post_list = Post.objects.filter(Q(title__icontains=search) | Q(content__icontains=search) | Q(category__title__icontains=search) | Q(description__icontains=search) | Q(author__username__icontains=search)).distinct() 
+    else:
+        post_list = Post.objects.all()
+        
     category_list = Category.objects.all()
     paginator = Paginator(post_list, 4)
     page_number = request.GET.get('page')
-
     page_obj = paginator.get_page(page_number)
-    latest = Post.objects.all()[:3]
+    
     context = {'latest': latest, 'page_obj': page_obj, 'category_list': category_list}
     return render(request, 'blog.html', context)
 
@@ -88,7 +94,8 @@ def post_detail_view(request, pk):
     page_obj = paginator.get_page(page_number)
     latest = Post.objects.all()[:3]
     form = CommentForm(request.POST or None)
-    context = {'post': post, 'latest': latest, 'form': form, 'page_obj': page_obj}
+    category_list = Category.objects.all()
+    context = {'post': post, 'latest': latest, 'form': form, 'page_obj': page_obj, 'category_list': category_list}
 
     if request.method == 'POST':
         if form.is_valid():
