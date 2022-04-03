@@ -76,7 +76,7 @@
     <div class="row">
       {% for post in recent %}
       <div class="post col-md-4">
-        <div class="post-thumbnail"><a href="{% url 'post' post.pk %}"><img src="{{ post.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
+        <div class="post-thumbnail"><a href="{% url 'post' post.pk %}"><img src="{{ post.thumbnail.url }}" alt="..." class="img-fluid"/></a></div>
         <div class="post-details">
           <div class="post-meta d-flex justify-content-between">
             <div class="date">{{ post.timestamp|date:"j F Y" }}</div>

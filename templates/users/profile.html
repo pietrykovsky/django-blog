@@ -12,6 +12,20 @@
         </div>
     </div>
     <div class="px-3">
+        <div class="d-flex justify-content-center align-items-center mb-4">
+            {% if profile.is_redactor or profile.is_staff %}
+            <strong class="mr-3">Redactor status</strong>
+            {% else %}
+            <strong class="mr-3">User status</strong>
+            {% endif %}
+            {% if request.user.is_redactor or request.user.is_staff and request.user != profile %}
+            <div class="ml-1">
+                <form action="{% url 'toggle_redactor' profile.pk %}" method="post"> {% csrf_token %}
+                    <button class="btn btn-info">Toggle redactor</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
         {% if profile.first_name %}
         <div>
             <span class="mr-3">Firstname:</span>

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserRegistrationView, UserLoginView, UserLogoutView, UserProfileView, UserEditView, UserPasswordResetView, UserPasswordResetDoneView, UserPasswordResetConfirmView, UserPasswordResetCompleteView, UserPasswordChangeView, UserPasswordChangeDoneView
+from .views import UserRegistrationView, UserLoginView, UserLogoutView, UserProfileView, UserEditView, UserPasswordResetView, UserPasswordResetDoneView, UserPasswordResetConfirmView, UserPasswordResetCompleteView, UserPasswordChangeView, UserPasswordChangeDoneView, toggle_user_redactor
 
 urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='register'),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('<int:pk>/profile/', UserProfileView.as_view(), name='profile'),
     path('<slug:slug>/profile/', UserProfileView.as_view(), name='profile'),
     path('profile/edit/', UserEditView.as_view(), name='edit'),
+    path('<int:pk>/profile/toggle_redactor/', toggle_user_redactor, name='toggle_redactor'),
 ]
