@@ -48,15 +48,15 @@ Now we need to create admin user:
 ```
 python manage.py createsuperuser
 ```
-And finnaly we can run our local server:
-```
-python manage.py runserver
-```
 Setup mail backend in settings.py
 ```
 EMAIL_HOST_USER = 'your_email@gmail.com'
 EMAIL_HOST_PASSWORD = 'your_password'
 DEFAULT_FROM_EMAIL = 'default@gmail.com'
 ```
-Once the server is hosted, head over to http://127.0.0.1:8000/
+And finnaly we can run our local server:
+```
+python manage.py runserver
+```
 
+Once the server is hosted, head over to http://127.0.0.1:8000/
