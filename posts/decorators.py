@@ -4,6 +4,7 @@ from functools import wraps
 
 from .models import Comment
 
+# checks if the user has the redactor status
 def user_is_redactor(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
@@ -14,6 +15,7 @@ def user_is_redactor(function):
 
     return wrap
 
+# checks if the user is the author of the comment
 def user_is_comment_author(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
