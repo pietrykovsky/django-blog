@@ -5,13 +5,13 @@
     {% for category in category_list %}
     <div class="item d-flex justify-content-between">
       <div class="d-flex align-items-center">
+        <a href="{% url 'blog' %}?search={{ category.title }}">{{ category.title }}</a>
         {% if request.user.is_redactor or request.user.is_staff %}
-        <a href="{% url 'category_edit' category.pk %}"><button class="btn btn-warning btn-sm rounded-0 mr-1" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></a>
+        <a href="{% url 'category_edit' category.pk %}"><button class="btn btn-warning btn-sm rounded-0 mx-1" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></a>
         <form action="{% url 'category_delete' category.pk %}" method="post"> {% csrf_token %}
-          <button type="submit" class="btn btn-danger btn-sm rounded-0 mr-1" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+          <button type="submit" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
         </form>
         {% endif %}
-        <a href="{% url 'blog' %}?search={{ category.title }}">{{ category.title }}</a>
       </div>
       <span>{{ category.posts_count }}</span>
     </div>

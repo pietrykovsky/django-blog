@@ -6,7 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from django.db.models import Q
 
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
+from mails.forms import NewsletterSignupForm
 from .models import Post, Comment, PostView, Category
 from users.models import User
 
@@ -16,9 +17,10 @@ from .decorators import user_is_redactor, user_is_comment_author
 # Create your views here.
 def home(request):
     posts = Post.objects.all()
+    form = NewsletterSignupForm()
     recent = posts[:3]
     popular = sorted(posts, key = lambda post: post.view_count, reverse = True)[:3]
-    context = {'popular': popular, 'recent': recent}
+    context = {'popular': popular, 'recent': recent, 'form': form}
     return render(request, 'index.html', context)
 
 def blog(request):
@@ -61,9 +63,10 @@ def category_delete(request, pk):
 
 @method_decorator(user_is_redactor, name="dispatch")
 class PostCreateView(CreateView):
+    form_class = PostForm
     model = Post
     template_name = 'create_post.html'
-    fields = ['category' ,'title', 'description', 'thumbnail', 'content']
+    # fields = ['category' ,'title', 'description', 'thumbnail', 'content']
     success_url = reverse_lazy('blog')
 
     def form_valid(self, form):
@@ -75,9 +78,10 @@ class PostCreateView(CreateView):
 
 @method_decorator(user_is_redactor, name="dispatch")
 class PostEditView(UpdateView):
+    form_class = PostForm
     model = Post
     template_name = 'edit_post.html'
-    fields = ['category' ,'title', 'description','thumbnail', 'content']
+    # fields = ['category' ,'title', 'description','thumbnail', 'content']
 
     def form_valid(self, form):
         self.object = form.save()

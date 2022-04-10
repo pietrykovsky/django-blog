@@ -1,0 +1,12 @@
+{% extends 'form.html' %}
+{% load crispy_forms_tags %}
+
+{% block form_title %}Contact{% endblock %}
+{% block form %}
+<form method="post"> {% csrf_token %}
+    {{ form|crispy }}
+    <div class="pt-4">
+        <button class="btn btn-info btn-block" type="submit">Send email</button>
+    </div>
+</form>
+{% endblock %}

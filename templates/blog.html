@@ -18,6 +18,9 @@
         </div>
         <div class="row">
           <!-- post -->
+          {% if not page_obj %}
+          <p class="mx-5 my-3">No posts found.</p>
+          {% endif %}
           {% for post in page_obj %}
           <div class="post col-xl-6">
             <div class="post-thumbnail"><a href="{% url 'post' post.pk %}"><img src="{{ post.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
@@ -26,8 +29,8 @@
                 <div class="date meta-last">{{ post.timestamp|date:"j F Y" }}</div>
                 <div class="category"><a href="{% url 'blog' %}?search={{ post.category.title }}">{{ post.category }}</a></div>
               </div><a href="{% url 'post' post.pk %}">
-                <h3 class="h4">{{ post.title }}</h3></a>
-              <p class="text-muted">{{ post.description }}</p>
+                <h3 class="h4 text-break">{{ post.title }}</h3></a>
+              <p class="text-muted text-break">{{ post.description }}</p>
               <footer class="post-footer d-flex align-items-center"><a href="{% url 'profile' post.author.pk %}" class="author d-flex align-items-center flex-wrap">
                   <div class="mr-2"><img src="{{ post.author.avatar.url }}" alt="..." class="rounded-circle" width="30px" height="30px"></div>
                   <div class="title"><span>{{ post.author.username }}</span></div></a>

@@ -16,8 +16,17 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Email setup
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = str(BASE_DIR / 'sent_mails')
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# EMAIL_FILE_PATH = str(BASE_DIR / 'sent_mails')
+# EMAIL_HOST_USER = 'test@gmail.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djangoblog200490@gmail.com'
+EMAIL_HOST_PASSWORD = 'key' #past the key or password app here
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'default@gmail.com'
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'posts',
+    'mails',
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',

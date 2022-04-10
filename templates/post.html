@@ -11,10 +11,11 @@
           <div class="post-thumbnail"><img src="{{ post.thumbnail.url }}" alt="..." class="img-fluid"></div>
           <div class="post-details">
             <div class="post-meta d-flex justify-content-between">
-              <div class="category"><a href="#">Business</a><a href="#">Financial</a></div>
+              <div class="category"><a href="{% url 'blog' %}?search={{ post.category }}">{{ post.category }}</a>
+              </div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
-              <h1>{{ post.title }}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
+              <h1>{{ post.title }}</h1>
               {% if request.user.is_redactor or request.user.is_staff %}
               <div class="d-flex align-items-center">
                 <div class="mx-1">

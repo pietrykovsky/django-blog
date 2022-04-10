@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', include('posts.urls')),
+    path('', include('mails.urls')),
     path('ckeditor/upload/', user_is_redactor(ckeditor_views.upload), name='ckeditor_upload'),
     path('ckeditor/browse/', never_cache(user_is_redactor(ckeditor_views.browse)), name='ckeditor_browse'),
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
